@@ -8,4 +8,4 @@ Git是一个分布式的版本管理工具，所有的开发者在本地都拥�
 `git commit -m [message]`:将缓存区的文件上传至当前分支,message为本次修改记录。\
 `git diff`:比较工作区与缓存区，或工作区与仓库文件（工作区空时）。\
 `git status`:查看当前缓存区的状态。\
-
+`git reset HEAD [filename]`:将add到缓存区的文件退回。\
