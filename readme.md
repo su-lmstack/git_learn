@@ -15,19 +15,28 @@ Git是一个分布式的版本管理工具，所有的开发者在本地都拥�
 `git log --pretty=oneline`:查看提交历史记录, oneline可以简化输出格式。\
 `git rm <filename>`:本地文件删除后，执行该命令，然后执行commit，可以删除版本库中的文件。\
 `git checkout -- <filename>`: 更改撤销，恢复至缓存区（若有）或版本库的状态。\
+`git stash`:将当前现场储存压栈，暂时去其他分支修改，之后可恢复现场。\
+`git stash pop`：弹出最近的现场，进行继续工作。\
 ## Git 分支与合并 
 -  当只有一条线时，master 指向最新提交，HEAD指向master,每次提交，master移动一次。
 -  当创建新的分支时，git新建一个指针指向master，然后head指向这个新分支，每次提交时，新分支的指针向前移动一步，而master的指针位置不变。
 -  当在新分支的任务完成时，需要将新分支merge到master上，可以直接将master的指针指向新分支的最新提交，然后删除旧分支，合并完成，只剩下了master分支,同时将HEAD指向master。
+-  如果在分支合并到master之前，master本身有了提交，那么git不能直接将master指针指向新分支进行快速合并。此时合并可能存在冲突，需要手动解决冲突，然后commit之后合并。
 ## Git 分支与合并相关命令
 `git checkout -b <branch>`:创建新分支，并切换至新分支。\
 `git branch <branch>`:创建新分支，但不切换至该分支。\
 `git checkout <branch>`:切换至某分支。\
 `git branch`:查看当前分支。\
-- 
+`git merge <branch>`:合并指定分支到当前分支。\
+`git merge --no-ff -m "[message]"`禁用快速合并模式，此次合并会创建一个commit。相当与master前进一步，新分支提交到新的master位置。
+`git branch -d <branch>`:删除分支。\
+`git branch -D <branch>`:强行删除一个未被合并过的分支。\
 ## Git 远程仓库
 github是支持git操作的远程仓库。通过SSH协议，可以实现本地与远程仓库的通信。将本地生成的SSH公钥复制到个人github账户的SSH通讯录中，即可实现本地上传及远程下载。
 ## Git 远程操作相关命令
 `git remote add origin git@github.com:<user_name>/<repo_name>.git`:将远程仓库与本地的仓库建立关联。远程库的名字之后就叫做origin。\
 `git push -u origin master`:将本地库的所有内容推送到远程库上, -u参数会让本地master和远程master建立关联，以后的推送就可以简化命令。\
 `git clone git@github.com:<user_name>/<repo_name>.git`:从远程仓库克隆到本地。\
+`git push <remote_name> <local_name>`: 推送本地某分支到远程仓库。\
+`git pull`: 本地向远程推送失败时，从远程仓库拉取相应分支到本地，进行分支更新。\
+`git branch --set-upstream-to <branch> origin/<branch>`:将本地分支与远程分支建立联系。\
